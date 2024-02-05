@@ -96,7 +96,7 @@ class _PopupContent extends StatelessWidget {
           ),
           child: child,
         ),
-        Positioned(
+        if (showArrow) Positioned(
           top: arrowDirection == _ArrowDirection.top ? 2 : null,
           bottom: arrowDirection == _ArrowDirection.bottom ? 2 : null,
           left: arrowHorizontal,
@@ -104,7 +104,7 @@ class _PopupContent extends StatelessWidget {
             key: arrowKey,
             quarterTurns: arrowDirection == _ArrowDirection.top ? 2 : 4,
             child: CustomPaint(
-              size: showArrow ? const Size(16, 8) : Size.zero,
+              size: const Size(16, 8),
               painter: _TrianglePainter(color: arrowColor ?? Colors.white),
             ),
           ),
@@ -176,7 +176,6 @@ class _PopupRoute extends PopupRoute<void> {
   _PopupRoute({
     RouteSettings? settings,
     ImageFilter? filter,
-    TraversalEdgeBehavior? traversalEdgeBehavior,
     required this.child,
     required this.targetRect,
     this.backgroundColor,
@@ -186,7 +185,6 @@ class _PopupRoute extends PopupRoute<void> {
   }) : super(
           settings: settings,
           filter: filter,
-          traversalEdgeBehavior: traversalEdgeBehavior,
         );
 
   @override

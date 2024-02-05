@@ -1,7 +1,7 @@
 part of flutter_popup;
 
 abstract class Screen {
-  static MediaQueryData get mediaQuery => MediaQueryData.fromView(
+  static MediaQueryData get mediaQuery => MediaQueryData.fromWindow(
         PlatformDispatcher.instance.views.first,
       );
 
