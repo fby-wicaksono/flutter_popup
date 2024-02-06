@@ -11,6 +11,8 @@ class CustomPopup extends StatelessWidget {
   final Color? arrowColor;
   final Color? barrierColor;
   final bool showArrow;
+  final VoidCallback? onPopupShown;
+  final VoidCallback? onPopupDismissed;
 
   const CustomPopup({
     super.key,
@@ -22,14 +24,17 @@ class CustomPopup extends StatelessWidget {
     this.arrowColor,
     this.showArrow = true,
     this.barrierColor,
+    this.onPopupShown,
+    this.onPopupDismissed,
   });
 
-  void _show(BuildContext context) {
+  void _show(BuildContext context) async {
+    onPopupShown?.call();
     final anchor = anchorKey?.currentContext ?? context;
     final renderBox = anchor.findRenderObject() as RenderBox?;
     if (renderBox == null) return;
     final offset = renderBox.localToGlobal(renderBox.paintBounds.topLeft);
-    Navigator.of(context).push(_PopupRoute(
+    await Navigator.of(context).push(_PopupRoute(
       targetRect: offset & renderBox.paintBounds.size,
       backgroundColor: backgroundColor,
       arrowColor: arrowColor,
@@ -37,6 +42,7 @@ class CustomPopup extends StatelessWidget {
       barriersColor: barrierColor,
       child: content,
     ));
+    onPopupDismissed?.call();
   }
 
   @override
